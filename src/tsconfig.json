@@ -1,0 +1,19 @@
+{
+	"compilerOptions": {
+		"outDir": "../dest",
+		"module": "commonjs",
+		"target": "es2018",
+		"declaration": false,
+		"strictNullChecks": true,
+		"noImplicitAny": true,
+		"removeComments": true,
+		"preserveConstEnums": false,
+		"sourceMap": false
+	},
+	"include": [
+		"./types.d.ts",
+		"./index.ts",
+		"./modules/*.ts",
+		"./notifications/*.ts"
+	]
+}
