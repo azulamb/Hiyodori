@@ -25,6 +25,8 @@ function LoadConfig( file?: string )
 			notifications: {},
 		};
 
+		config.debug = !!json.debug;
+
 		if ( typeof json.daemon === 'object' )
 		{
 			config.daemon =

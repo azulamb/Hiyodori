@@ -9,7 +9,7 @@ function Web(data, option) {
     });
     const tokens = option.tokens || [];
     const message = {
-        data: { title: 'TITLE', body: 'MESSAGE' },
+        data: { title: data.title, body: data.message },
         tokens: tokens,
     };
     return admin.messaging().sendMulticast(message).then((response) => {

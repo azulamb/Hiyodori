@@ -27,7 +27,6 @@ class Notifications extends Imports_1.default {
         if (this.status[module] === undefined) {
             this.status[module] = false;
         }
-        data.send = true;
         if (data.send === this.status[module]) {
             return Promise.resolve('No send: ' + data.message);
         }

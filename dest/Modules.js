@@ -8,6 +8,7 @@ class Modules extends Imports_1.default {
         this.ws = ws;
     }
     async init(config) {
+        this.debug = !!config.debug;
         await this.notifications.init();
         await this.ws.start(config.puppeteer);
         return this.load('modules');
@@ -28,6 +29,9 @@ class Modules extends Imports_1.default {
         }
         return this.mods[config.module](config, this.ws).then((result) => {
             console.log(result);
+            if (this.debug) {
+                result.send = true;
+            }
             return this.notifications.notify(config.module, result, config.notification);
         }).catch((error) => {
             console.error(error);

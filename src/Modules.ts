@@ -6,6 +6,7 @@ export default class Modules extends Imports<ModuleConfig,NotificationData>
 {
 	private notifications: Notifications;
 	private ws: WebScraping;
+	private debug: boolean;
 
 	constructor( notifications: Notifications, ws: WebScraping )
 	{
@@ -17,6 +18,7 @@ export default class Modules extends Imports<ModuleConfig,NotificationData>
 
 	public async init( config: ConfigJSON )
 	{
+		this.debug = !!config.debug;
 		await this.notifications.init();
 		await this.ws.start( config.puppeteer ); // TODO: remove.
 		return this.load( 'modules' );
@@ -43,6 +45,11 @@ console.log('exec:',config,this.mods);
 		{
 			console.log( result );
 			// TODO: notification check.
+
+			if ( this.debug )
+			{
+				result.send = true;
+			}
 			return this.notifications.notify( config.module, result, config.notification );
 		} ).catch( ( error ) =>
 		{

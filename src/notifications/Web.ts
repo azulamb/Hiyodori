@@ -20,7 +20,7 @@ export default function Web( data: NotificationData, option: FCMOption ): Promis
 
 	const message: admin.messaging.MulticastMessage =
 	{
-		data: { title: 'TITLE', body: 'MESSAGE' },
+		data: { title: data.title, body: data.message },
 		tokens: tokens,
 	};
 
