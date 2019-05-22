@@ -55,7 +55,7 @@ function Init()
 		} ).catch( () =>
 		{
 			SetMessage( 'Did not get notification permission.' );
-		});
+		} );
 	} );
 
 	del.addEventListener( 'click', () =>
@@ -79,17 +79,22 @@ function Init()
 document.addEventListener( 'DOMContentLoaded', Init );
 	</script>
 	<style>
+article { max-width: 600px; display: block; margin: auto; }
 button { display: none; }
 button.show { display: block; }
+textarea { display: block; width: 100%; }
 	</style>
 </head>
 <body>
-	<h1>Web push(FCM) get token sample.</h1>
+	<article>
+			<h1>Web push(FCM) get token sample.</h1>
 
-	<div>
-		<button id="add">Create token</button>
-		<button id="del">Remove token</button>
-	</div>
-	<textarea id="message"></textarea>
+			<div>
+				<button id="add">Create token</button>
+				<button id="del">Remove token</button>
+			</div>
+
+			<textarea id="message"></textarea>
+	</article>
 </body>
 </html>
