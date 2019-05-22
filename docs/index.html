@@ -18,12 +18,12 @@ firebase.initializeApp( {
 } );
 	</script>
 	<script>
-function Init( message )
+function Init( messaging )
 {
 	const add = document.getElementById( 'add' );
 	const del = document.getElementById( 'del' );
 
-	const messaging = firebase.messaging();
+	const message = document.getElementById( 'message' );
 
 	messaging.usePublicVapidKey( 'BPMbhE8GvCKVdtmhXgszP-MtJJ9kvUUzvPl0918qwmfiAHJjwR2a8y7ho_-kiUtVj70vx1xxAiec30T_j7qg_GI' );
 
@@ -79,9 +79,9 @@ document.addEventListener( 'DOMContentLoaded', () =>
 {
 	navigator.serviceWorker.register( './firebase-messaging-sw.js' ).then( ( registration ) =>
 	{
-		const message = document.getElementById( 'message' );
-		message.useServiceWorker( registration );
-		Init( message );
+		const messaging = firebase.messaging();
+		messaging.useServiceWorker( registration );
+		Init( messaging );
 	} ).catch().catch( ( error ) => { console.error( error ); } );
 } );
 	</script>
