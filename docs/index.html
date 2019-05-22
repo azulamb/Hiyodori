@@ -73,6 +73,17 @@ function Init( messaging )
 		} );
 	} );
 
+	document.getElementById( 'reset' ).addEventListener( 'click', () =>
+	{
+		navigator.serviceWorker.getRegistrations().then( ( registrations ) =>
+		{
+			for ( let registration of registrations )
+			{
+				registration.unregister();
+			}
+		} );
+	} );
+
 	return GetToken();
 }
 document.addEventListener( 'DOMContentLoaded', () =>
@@ -102,6 +113,10 @@ textarea { display: block; width: 100%; }
 			</div>
 
 			<textarea id="message"></textarea>
+
+			<div>
+				<button id="reset">Reset ServiceWorker</button>
+			</div>
 	</article>
 </body>
 </html>
