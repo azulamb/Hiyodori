@@ -11,7 +11,11 @@ export default function Web( data: NotificationData, option: FCMOption ): Promis
 {
 	console.log('Android:',data);
 
-	admin.initializeApp( option.credential );
+	const app = admin.initializeApp(
+	{
+		credential: admin.credential.cert( option.credential ),
+		databaseURL: option.databaseURL,
+	} );
 	const tokens = option.tokens || [];
 
 	const message: admin.messaging.MulticastMessage =
@@ -22,15 +26,20 @@ export default function Web( data: NotificationData, option: FCMOption ): Promis
 
 	return admin.messaging().sendMulticast( message ).then( ( response ) =>
 	{
+		console.log(response);
 		if ( 0 < response.failureCount )
 		{
 			console.error( 'Failure tokens:' );
 			response.responses.forEach( ( res, index ) =>
 			{
+				if ( res.success ) { return; }
 				console.error( '[' + index + ']: ' + tokens[ index ] );
 			} );
 		}
 
+		return app.delete();
+	} ).then( () =>
+	{
 		return { message: 'OK' };
 	} );
 }
