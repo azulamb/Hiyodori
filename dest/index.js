@@ -21,13 +21,15 @@ function LoadConfig(file) {
             notifications: {},
         };
         config.debug = !!json.debug;
-        if (typeof json.daemon === 'object') {
+        if (json.daemon) {
             config.daemon =
                 {
                     interval: 10,
                 };
-            if (typeof json.daemon.interval === 'number' && 0 < json.daemon.interval) {
-                config.daemon.interval = json.daemon.interval;
+            if (typeof json.daemon === 'object') {
+                if (typeof json.daemon.interval === 'number' && 0 < json.daemon.interval) {
+                    config.daemon.interval = json.daemon.interval;
+                }
             }
         }
         if (typeof json.useragent === 'string') {
@@ -66,10 +68,8 @@ function LoadConfig(file) {
         }
         return config;
     }).catch((error) => {
-        console.log(error);
-        const config = {
-            notifications: {},
-        };
+        console.error(error);
+        const config = {};
         return config;
     });
 }

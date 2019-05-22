@@ -27,15 +27,19 @@ function LoadConfig( file?: string )
 
 		config.debug = !!json.debug;
 
-		if ( typeof json.daemon === 'object' )
+		if ( json.daemon )
 		{
 			config.daemon =
 			{
 				interval: 10,
 			};
-			if ( typeof json.daemon.interval === 'number' && 0 < json.daemon.interval )
+
+			if ( typeof json.daemon === 'object' )
 			{
-				config.daemon.interval = json.daemon.interval;
+				if ( typeof json.daemon.interval === 'number' && 0 < json.daemon.interval )
+				{
+					config.daemon.interval = json.daemon.interval;
+				}
 			}
 		}
 
@@ -88,15 +92,12 @@ function LoadConfig( file?: string )
 		return config;
 	} ).catch( ( error ) =>
 	{
-		console.log( error );
+		console.error( error );
 
-		const config: ConfigJSON =
-		{
-			notifications: {},
-		};
+		const config: ConfigJSON = {};
 
 		return config;
-	});
+	} );
 }
 
 process.on( 'SIGINT', () => { process.exit( 0 ); } );
