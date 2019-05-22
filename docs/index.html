@@ -5,6 +5,7 @@
 	<title>Push token sample</title>
 	<link rel="manifest" href="./manifest.json">
 	<script src="https://www.gstatic.com/firebasejs/6.0.2/firebase-app.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/6.0.2/firebase-messaging.js"></script>
 	<script>
 firebase.initializeApp( {
 	apiKey: "AIzaSyC5kqgC7J2hh03OVoi6ZiBrlPXyR6Dqbqg",
@@ -15,7 +16,6 @@ firebase.initializeApp( {
 	messagingSenderId: "120822794138",
 	appId: "1:120822794138:web:d90bc19eec403ab7"
 } );
-const messaging = firebase.messaging();
 	</script>
 	<script>
 function Init()
@@ -23,6 +23,8 @@ function Init()
 	const add = document.getElementById( 'add' );
 	const del = document.getElementById( 'del' );
 	const message = document.getElementById( 'message' );
+
+	const messaging = firebase.messaging();
 
 	messaging.usePublicVapidKey( 'BPMbhE8GvCKVdtmhXgszP-MtJJ9kvUUzvPl0918qwmfiAHJjwR2a8y7ho_-kiUtVj70vx1xxAiec30T_j7qg_GI' );
 
