@@ -18,11 +18,10 @@ firebase.initializeApp( {
 } );
 	</script>
 	<script>
-function Init()
+function Init( message )
 {
 	const add = document.getElementById( 'add' );
 	const del = document.getElementById( 'del' );
-	const message = document.getElementById( 'message' );
 
 	const messaging = firebase.messaging();
 
@@ -74,9 +73,17 @@ function Init()
 		} );
 	} );
 
-	GetToken().catch( ( error ) => { console.error( error ); } );
+	return GetToken();
 }
-document.addEventListener( 'DOMContentLoaded', Init );
+document.addEventListener( 'DOMContentLoaded', () =>
+{
+	navigator.serviceWorker.register( './firebase-messaging-sw.js' ).then( ( registration ) =>
+	{
+		const message = document.getElementById( 'message' );
+		message.useServiceWorker( registration );
+		Init( message );
+	} ).catch().catch( ( error ) => { console.error( error ); } );
+} );
 	</script>
 	<style>
 article { max-width: 600px; display: block; margin: auto; }
