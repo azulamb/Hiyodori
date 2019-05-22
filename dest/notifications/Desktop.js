@@ -7,7 +7,7 @@ function Windows(data) {
         notifier.notify({
             title: data.title,
             message: data.message,
-        }, (error, a, data) => {
+        }, (error, response, data) => {
             if (error) {
                 return reject(error);
             }

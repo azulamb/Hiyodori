@@ -23,6 +23,7 @@
     "@types/puppeteer": "^1.12.4"
   },
   "dependencies": {
+    "firebase-admin": "^7.4.0",
     "node-notifier": "^5.4.0",
     "puppeteer": "^1.16.0"
   }

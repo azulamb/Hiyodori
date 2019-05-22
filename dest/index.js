@@ -71,7 +71,7 @@ function LoadConfig(file) {
 }
 LoadConfig(process.argv[2]).then((config) => {
     const ws = new WebScraping_1.default(config.useragent);
-    const mods = new Modules_1.default(new Notifications_1.default(), ws);
+    const mods = new Modules_1.default(new Notifications_1.default(config.notifications), ws);
     return mods.init(config).then(() => {
         if (!config.daemon) {
             return mods.execAll(config.scripts);

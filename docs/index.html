@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ja" style="font-size:20px;">
+<head>
+	<meta charset="utf-8">
+	<title>Push token sample</title>
+	<link rel="manifest" href="./manifest.json">
+	<script src="https://www.gstatic.com/firebasejs/6.0.2/firebase-app.js"></script>
+	<script>
+firebase.initializeApp( {
+	apiKey: "AIzaSyC5kqgC7J2hh03OVoi6ZiBrlPXyR6Dqbqg",
+	authDomain: "hiyodorinotification.firebaseapp.com",
+	databaseURL: "https://hiyodorinotification.firebaseio.com",
+	projectId: "hiyodorinotification",
+	storageBucket: "hiyodorinotification.appspot.com",
+	messagingSenderId: "120822794138",
+	appId: "1:120822794138:web:d90bc19eec403ab7"
+} );
+	</script>
+	<script>
+function Init()
+{
+	const add = document.getElementById( 'add' );
+	const del = document.getElementById( 'del' );
+	const message = document.getElementById( 'message' );
+
+	const messaging = firebase.messaging();
+	messaging.usePublicVapidKey( 'BPMbhE8GvCKVdtmhXgszP-MtJJ9kvUUzvPl0918qwmfiAHJjwR2a8y7ho_-kiUtVj70vx1xxAiec30T_j7qg_GI' );
+
+	function SetMessage( msg ) { message.value = msg; }
+
+	function GetToken( errmsg )
+	{
+		return messaging.getToken().then( ( token ) =>
+		{
+			if ( !token )
+			{
+				SetMessage( errmsg || 'No token' );
+				add.classList.add( 'show' );
+				del.classList.remove( 'show' );
+				return;
+			}
+			SetMessage( token );
+			del.classList.add( 'show' );
+			add.classList.remove( 'show' );
+		} );
+	}
+
+	add.addEventListener( 'click', () =>
+	{
+		messaging.requestPermission().then( () =>
+		{
+			return GetToken( 'Failure get token.' );
+		} ).catch( () =>
+		{
+			SetMessage( 'Did not get notification permission.' );
+		});
+	} );
+
+	del.addEventListener( 'click', () =>
+	{
+		messaging.getToken().then( ( token ) =>
+		{
+			return messaging.deleteToken( token );
+		} ).then( () =>
+		{
+			SetMessage( 'Success delete token.' );
+			add.classList.add( 'show' );
+			del.classList.remove( 'show' );
+		} ).catch( () =>
+		{
+			SetMessage( 'Failure delete token.' );
+		} );
+	} );
+
+	GetToken();
+}
+document.addEventListener( 'DOMContentLoaded', Init );
+	</script>
+	<style>
+button { display: none; }
+button.show { display: block; }
+	</style>
+</head>
+<body>
+	<h1>Web push(FCM) get token sample.</h1>
+
+	<div>
+		<button id="add">Create token</button>
+		<button id="del">Remove token</button>
+	</div>
+	<textarea id="message"></textarea>
+</body>
+</html>

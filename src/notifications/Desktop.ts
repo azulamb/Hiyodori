@@ -10,7 +10,7 @@ export default function Windows( data: NotificationData ): Promise<ResultData>
 		{
 			title: data.title,
 			message: data.message,
-		}, ( error, a, data ) =>
+		}, ( error, response, data ) =>
 		{
 			if ( error ) { return reject( error ); }
 			resolve( data );

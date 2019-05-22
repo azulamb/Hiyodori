@@ -3,9 +3,17 @@ import Imports from './Imports';
 export default class Notifications extends Imports<NotificationData,ResultData>
 {
 	private status: { [ keys: string ]: boolean };
+	private options: { [ key: string ]: any };
+
+	constructor( options: { [ key: string ]: any } )
+	{
+		super();
+		this.status = {};
+		this.options = options;
+	}
+
 	public init()
 	{
-		this.status = {};
 		return this.load( 'notifications' );
 	}
 
@@ -39,7 +47,7 @@ export default class Notifications extends Imports<NotificationData,ResultData>
 
 		return Promise.all( types.map( ( type ) =>
 		{
-			return this.mods[ type ]( data ).then( ( result ) =>
+			return this.mods[ type ]( data, this.options[ type ] ).then( ( result ) =>
 			{
 				return { message: result.message, type: type };
 			} );

@@ -96,7 +96,7 @@ function LoadConfig( file?: string )
 LoadConfig( process.argv[ 2 ] ).then( ( config ) =>
 {
 	const ws = new WebScraping( config.useragent );
-	const mods = new Modules( new Notifications(), ws );
+	const mods = new Modules( new Notifications( config.notifications ), ws );
 
 	return mods.init( config ).then( () =>
 	{
