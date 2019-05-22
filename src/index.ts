@@ -31,8 +31,12 @@ function LoadConfig( file?: string )
 		{
 			config.daemon =
 			{
-				interval: 5,
+				interval: 10,
 			};
+			if ( typeof json.daemon.interval === 'number' && 0 < json.daemon.interval )
+			{
+				config.daemon.interval = json.daemon.interval;
+			}
 		}
 
 		if ( typeof json.useragent === 'string' )
@@ -95,6 +99,8 @@ function LoadConfig( file?: string )
 	});
 }
 
+process.on( 'SIGINT', () => { process.exit( 0 ); } );
+
 LoadConfig( process.argv[ 2 ] ).then( ( config ) =>
 {
 	const ws = new WebScraping( config.useragent );
@@ -107,7 +113,22 @@ LoadConfig( process.argv[ 2 ] ).then( ( config ) =>
 			return mods.execAll( config.scripts );
 		}
 
-		const daemon = new Daemon( config );	
+		console.log( 'Start daemon!' );
+
+		const daemon = new Daemon( config );
+
+		daemon.addEventListener( 'update', () =>
+		{
+			mods.execAll( config.scripts );
+		} );
+
+		process.on( 'exit', () =>
+		{
+			console.log( 'Stop daemon!!' );
+			daemon.stop();
+		} );
+
+		return daemon.start();
 	} ).then( () => { return ws.end(); } );
 } ).then( () =>
 {

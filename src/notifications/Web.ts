@@ -9,7 +9,7 @@ interface FCMOption
 
 export default function Web( data: NotificationData, option: FCMOption ): Promise<ResultData>
 {
-	console.log('Android:',data);
+	console.log( 'Web:', data );
 
 	const app = admin.initializeApp(
 	{

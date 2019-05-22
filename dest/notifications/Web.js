@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const admin = require("firebase-admin");
 function Web(data, option) {
-    console.log('Android:', data);
+    console.log('Web:', data);
     const app = admin.initializeApp({
         credential: admin.credential.cert(option.credential),
         databaseURL: option.databaseURL,
