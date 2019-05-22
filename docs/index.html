@@ -79,6 +79,7 @@ function Init( messaging )
 		{
 			for ( let registration of registrations )
 			{
+				console.log( 'Unregister: ', registration );
 				registration.unregister();
 			}
 		} );
