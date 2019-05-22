@@ -1,6 +1,15 @@
-self.addEventListener('push', ( event ) =>
+self.addEventListener( 'push', ( event ) =>
 {
-	console.log( event, event.data.json() );
+	console.log( event );
+	const data = event.data.json();
+	console.log( data.data );
+
+	event.waitUntil(
+		self.registration.showNotification( data.data.title,
+		{
+			body: data.data.body,
+		} )
+	);
 } );
 
 importScripts( 'https://www.gstatic.com/firebasejs/6.0.2/firebase-app.js' );
