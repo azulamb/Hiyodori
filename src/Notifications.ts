@@ -5,11 +5,11 @@ export default class Notifications extends Imports<NotificationData,ResultData>
 	private status: { [ keys: string ]: boolean };
 	private options: { [ key: string ]: any };
 
-	constructor( options: { [ key: string ]: any } )
+	constructor( options?: { [ key: string ]: any } )
 	{
 		super();
 		this.status = {};
-		this.options = options;
+		this.options = options || {};
 	}
 
 	public init()

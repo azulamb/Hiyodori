@@ -5,7 +5,7 @@ class Notifications extends Imports_1.default {
     constructor(options) {
         super();
         this.status = {};
-        this.options = options;
+        this.options = options || {};
     }
     init() {
         return this.load('notifications');
