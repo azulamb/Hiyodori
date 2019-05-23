@@ -120,6 +120,7 @@ LoadConfig( process.argv[ 2 ] ).then( ( config ) =>
 
 		daemon.addEventListener( 'update', () =>
 		{
+			console.log( new Date() );
 			mods.execAll( config.scripts );
 		} );
 

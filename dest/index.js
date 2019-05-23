@@ -84,6 +84,7 @@ LoadConfig(process.argv[2]).then((config) => {
         console.log('Start daemon!');
         const daemon = new Daemon_1.default(config);
         daemon.addEventListener('update', () => {
+            console.log(new Date());
             mods.execAll(config.scripts);
         });
         process.on('exit', () => {
