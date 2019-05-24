@@ -93,6 +93,7 @@ LoadConfig(process.argv[2]).then((config) => {
             process.env[key] = env[key];
         });
     }
+    console.log(new Date());
     return mods.init(config).then(() => {
         if (!config.daemon) {
             return mods.execAll(config.scripts);

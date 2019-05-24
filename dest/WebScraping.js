@@ -29,7 +29,10 @@ class WebScraping {
     }
     fetch(url, option) {
         return this.page().then((page) => {
-            return page.goto(url, option);
+            return page.goto(url, option).then((response) => {
+                page.close();
+                return response;
+            });
         });
     }
     waitDomContentLoaded(page) {

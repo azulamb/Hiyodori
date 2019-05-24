@@ -127,6 +127,8 @@ LoadConfig( process.argv[ 2 ] ).then( ( config ) =>
 		} );
 	}
 
+	console.log( new Date() );
+
 	return mods.init( config ).then( () =>
 	{
 		if ( !config.daemon )

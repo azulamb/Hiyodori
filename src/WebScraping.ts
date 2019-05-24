@@ -39,7 +39,11 @@ export default class WebScraping
 	{
 		return this.page().then( ( page ) =>
 		{
-			return page.goto( url, option );
+			return page.goto( url, option ).then( ( response ) =>
+			{
+				page.close();
+				return response;
+			} );
 		} );
 	}
 
