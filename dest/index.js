@@ -21,6 +21,16 @@ function LoadConfig(file) {
             notifications: {},
         };
         config.debug = !!json.debug;
+        if (typeof json.env === 'object') {
+            const env = {};
+            Object.keys(json.env).forEach((key) => {
+                if (typeof json.env[key] !== 'string') {
+                    return;
+                }
+                env[key] = json.env[key];
+            });
+            config.env = env;
+        }
         if (json.daemon) {
             config.daemon =
                 {
@@ -77,6 +87,12 @@ process.on('SIGINT', () => { process.exit(0); });
 LoadConfig(process.argv[2]).then((config) => {
     const ws = new WebScraping_1.default(config.useragent);
     const mods = new Modules_1.default(new Notifications_1.default(config.notifications), ws);
+    if (config.env) {
+        const env = config.env;
+        Object.keys(env).forEach((key) => {
+            process.env[key] = env[key];
+        });
+    }
     return mods.init(config).then(() => {
         if (!config.daemon) {
             return mods.execAll(config.scripts);

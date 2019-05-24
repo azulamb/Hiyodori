@@ -27,6 +27,7 @@ interface ResultData
 interface ConfigJSON
 {
 	debug?: boolean;
+	env?: { [ keys: string ]: string },
 	daemon?: DaemonConfig;
 	useragent?: string;
 	scripts?: ModuleConfig[];

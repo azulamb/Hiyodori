@@ -64,6 +64,8 @@ export default async function AppleSystemStatus( config: ModuleConfig, ws: WebSc
 
 	result.send = 0 < error.length;
 
+	await page.close();
+
 	return result;
 }
 /*

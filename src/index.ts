@@ -27,6 +27,17 @@ function LoadConfig( file?: string )
 
 		config.debug = !!json.debug;
 
+		if ( typeof json.env === 'object' )
+		{
+			const env: { [ keys: string ]: string } = {};
+			Object.keys( json.env ).forEach( ( key ) =>
+			{
+				if ( typeof json.env[ key ] !== 'string' ) { return; }
+				env[ key ] = json.env[ key ];
+			} );
+			config.env = env;
+		}
+
 		if ( json.daemon )
 		{
 			config.daemon =
@@ -106,6 +117,15 @@ LoadConfig( process.argv[ 2 ] ).then( ( config ) =>
 {
 	const ws = new WebScraping( config.useragent );
 	const mods = new Modules( new Notifications( config.notifications ), ws );
+
+	if ( config.env )
+	{
+		const env = config.env;
+		Object.keys( env ).forEach( ( key ) =>
+		{
+			process.env[ key ] = env[ key ];
+		} );
+	}
 
 	return mods.init( config ).then( () =>
 	{

@@ -34,6 +34,7 @@ async function AppleSystemStatus(config, ws) {
             'NG(' + error.length + '): ' + error.map((item) => { return item.service; })
         ].join('\n');
     result.send = 0 < error.length;
+    await page.close();
     return result;
 }
 exports.default = AppleSystemStatus;
